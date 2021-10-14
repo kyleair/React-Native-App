@@ -44,6 +44,7 @@ componentDidMount() {
    databruh: goodd.data
  })
 }
+
 render(){
   const { error, isLoaded, databruh } = this.state;
     if (error) {
@@ -59,18 +60,44 @@ render(){
             let best_odds_zero=game.sites[0].odds.h2h[0]
             let avg_odds_one=0
             let best_odds_one=game.sites[0].odds.h2h[1]
-           return(<Text>
-              {game.teams[0]} vs {game.teams[1]} {'\n'}
-              {game.sites.map((site) => {
-                if (site.odds.h2h[0] > best_odds_zero){
-                  best_odds_zero = site.odds.h2h[0]
-                }
-                if (site.odds.h2h[1] > best_odds_one){
-                  best_odds_one = site.odds.h2h[1]
-                }
+            let best_site_zero=game.sites[0].site_nice
+            let best_site_one=game.sites[1].site_nice
 
-              })}
-              (Avg:  {(game.sites[0].odds.h2h[0]<=0?"":"+")}{game.sites[0].odds.h2h[0]} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero}) vs (Avg: 300| Best: {(best_odds_one<=0?"":"+")}{best_odds_one}) {'\n'}
+            //loop through all sites keeping track of best odds and adding all odds for avg calculation (adding in decimal format)
+            game.sites.map((site) => {
+              if (site.odds.h2h[0] > best_odds_zero){
+                best_odds_zero = site.odds.h2h[0] 
+                best_site_zero = site.site_nice
+              }
+              if (site.odds.h2h[1] > best_odds_one){
+                best_odds_one = site.odds.h2h[1]
+                best_site_one = site.site_nice
+              }
+              if(site.odds.h2h[0]>0){
+                avg_odds_zero += 1+(site.odds.h2h[0]/100)
+              }
+              else {
+                avg_odds_zero += 1-(100/site.odds.h2h[0])
+              }
+              if(site.odds.h2h[1]>0){
+                avg_odds_one += 1+(site.odds.h2h[1]/100)
+              } 
+              else {
+                avg_odds_one += 1-(100/site.odds.h2h[1])
+              }
+            })
+
+            //normalize odds to average and convert to american format
+            avg_odds_zero = avg_odds_zero/game.sites_count
+            avg_odds_one = avg_odds_one/game.sites_count
+            if(avg_odds_zero>=2) {avg_odds_zero = Math.round((avg_odds_zero-1)*100)}
+            else {avg_odds_zero = Math.round(-100/(avg_odds_zero-1))}
+            if(avg_odds_one>=2) {avg_odds_one = Math.round((avg_odds_one-1)*100)}
+            else {avg_odds_one = Math.round(-100/(avg_odds_one-1))}
+
+           return(<Text>
+              {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero} @{best_site_zero}){'\n'}vs{'\n'}
+              {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"":"+")}{best_odds_one} @{best_site_one}){'\n'}__________________________________________________{'\n'}
               </Text>) 
           })}
           </ScrollView>
@@ -79,7 +106,6 @@ render(){
     }
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
