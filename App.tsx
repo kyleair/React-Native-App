@@ -1,17 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import goodd from './data2.json'
+import goodd from './data2.json';
 
-
-let bruh:BetResponse
-function Cat(props: any){
-  return(
-    <View>
-        <Text>Hello I am {props.name}</Text>
-    </View>
-)
-}
 
 export default class App extends Component {
   constructor(props:any) {
@@ -23,35 +14,35 @@ export default class App extends Component {
 }
 
 componentDidMount() {
-  // fetch("https://odds.p.rapidapi.com/v1/odds?sport=americanfootball_nfl&region=us&mkt=h2h&dateFormat=iso&oddsFormat=decimal", {
-  //   "method": "GET",
-  //   "headers": {
-  //     "x-rapidapi-host": "odds.p.rapidapi.com",
-  //     "x-rapidapi-key": "86a584335bmshc19523db0e51bbfp11a759jsnb08a99cb55ba"
-  //   }
-  // })
-  //     .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //         this.setState({
-  //           isLoaded: true,
-  //           databruh: result.data
-  //         });
-  //       },
-  //       // Note: it's important to handle errors here
-  //       // instead of a catch() block so that we don't swallow
-  //       // exceptions from actual bugs in components.
-  //       (error) => {
-  //         this.setState({
-  //           isLoaded: true,
-  //           error
-  //         });
-  //       }
-  //     )
- this.setState({
-   isLoaded: true,
-   databruh: goodd.data
- })
+  fetch("https://odds.p.rapidapi.com/v1/odds?sport=americanfootball_nfl&region=us&mkt=h2h&dateFormat=iso&oddsFormat=american", {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "odds.p.rapidapi.com",
+      "x-rapidapi-key": "86a584335bmshc19523db0e51bbfp11a759jsnb08a99cb55ba"
+    }
+  })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            databruh: result.data
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+//  this.setState({
+//    isLoaded: true,
+//    databruh: goodd.data
+//  })
 }
 render(){
   const { error, isLoaded, databruh } = this.state;
@@ -69,7 +60,7 @@ render(){
         <SafeAreaView>
           {databruh.map((game) => {
            return(<Text>
-              {game.teams[0]} vs {game.teams[1]}{'\n'}
+              {game.teams[0]} ({game.sites[0].odds.h2h[0]}) vs {game.teams[1]}{'\n'}
               </Text>) 
           })}
         </SafeAreaView>
