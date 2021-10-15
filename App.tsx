@@ -53,8 +53,11 @@ render(){
       return <SafeAreaView><Text>Loading...</Text></SafeAreaView>;
     } else {
       return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
           <ScrollView>
+            <Text style={styles.header}>
+              NFL Betting Odds
+            </Text>
           {databruh.map((game) => {
             let avg_odds_zero=0
             let best_odds_zero=game.sites[0].odds.h2h[0]
@@ -95,10 +98,14 @@ render(){
             if(avg_odds_one>=2) {avg_odds_one = Math.round((avg_odds_one-1)*100)}
             else {avg_odds_one = Math.round(-100/(avg_odds_one-1))}
 
-           return(<Text>
+           return(<View style={styles.gamebox}><Text>{'\n'}
               {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero} @{best_site_zero}){'\n'}vs{'\n'}
-              {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"":"+")}{best_odds_one} @{best_site_one}){'\n'}__________________________________________________{'\n'}
-              </Text>) 
+              {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"":"+")}{best_odds_one} @{best_site_one}){'\n'}
+              </Text>
+              <Text>
+                Game @ {game.home_team}
+              </Text>
+              </View>) 
           })}
           </ScrollView>
         </SafeAreaView>
@@ -110,16 +117,19 @@ render(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#86BBC7'
   },
   header: {
-    flex: 0.1,
-    alignSelf: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: '#DFF4F9',
+    margin:15,
+    padding:10,
   },
-  weekheader: {
-    flex: 0.1,
-  },
-  teamlist: {
-    padding: 25,
+  gamebox: {
+    borderWidth: 0.5,
+    borderColor:'black',
+    margin:15,
+    backgroundColor: '#DFF4F9'
   }
 });
