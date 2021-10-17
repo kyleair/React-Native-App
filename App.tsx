@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Image } from 'react-native';
 import goodd from './data2.json';
-import key from './apikey.json'
+import key from './apikey.json';
+import logos from './imageloader';
 
 
 export default class App extends Component {
@@ -44,10 +45,11 @@ componentDidMount() {
    isLoaded: true,
    nfldata: goodd.data
  })
-}
+ }
 
 render(){
   const { error, isLoaded, nfldata } = this.state;
+ 
     if (error) {
       return <SafeAreaView><Text>Error: {error.message}</Text></SafeAreaView>;
     } else if (!isLoaded) {
@@ -59,6 +61,7 @@ render(){
             <Text style={styles.header}>
               NFL Betting Odds
             </Text>
+            
           {nfldata.map((game) => {
             let avg_odds_zero=0
             let best_odds_zero=game.sites[0].odds.h2h[0]
@@ -69,6 +72,8 @@ render(){
             let date = new Date(game.commence_time)
             let dateString = date.toLocaleTimeString();
             dateString = dateString.slice(0, dateString.length-6) + dateString.slice(dateString.length-3)+', '+date.toDateString().slice(0,date.toDateString().length-5)
+            let team_zero_path = game.teams[0].split(' ').join('').toLowerCase()
+            let team_one_path = game.teams[1].split(' ').join('').toLowerCase()
 
             //loop through all sites keeping track of best odds and adding all odds for avg calculation (adding in decimal format)
             game.sites.map((site) => {
@@ -103,7 +108,9 @@ render(){
             else {avg_odds_one = Math.round(-100/(avg_odds_one-1))}
 
            return(<View style={styles.gamebox}><View style={styles.oddsboxWrapper}><Text style={styles.oddsbox}>
+              <Image source={logos[team_zero_path]} style={{width:40, height:40}}/>
               {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero} @{best_site_zero}){'\n'}vs{'\n'}
+              <Image source={logos[team_one_path]} style={{width:40, height:40}}/>
               {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"":"+")}{best_odds_one} @{best_site_one})
               </Text></View>
               <Text style={styles.hometeambox}>
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     padding:10
   },
   oddsbox: {
-    fontFamily: 'Futura'
+    fontFamily: 'Futura',
   },
   hometeambox: {
     padding:10,
