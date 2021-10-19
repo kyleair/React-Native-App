@@ -59,7 +59,7 @@ render(){
         <SafeAreaView style={styles.container}>
           <ScrollView>
             <Text style={styles.header}>
-              NFL Betting Odds
+             NFL Betting Odds
             </Text>
             
           {nfldata.map((game) => {
@@ -107,10 +107,13 @@ render(){
             if(avg_odds_one>=2) {avg_odds_one = Math.round((avg_odds_one-1)*100)}
             else {avg_odds_one = Math.round(-100/(avg_odds_one-1))}
 
-           return(<View style={styles.gamebox}><View style={styles.oddsboxWrapper}><Text style={styles.oddsbox}>
-              <Image source={logos[team_zero_path]} style={{width:40, height:40}}/>
-              {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero} @{best_site_zero}){'\n'}vs{'\n'}
-              <Image source={logos[team_one_path]} style={{width:40, height:40}}/>
+           return(<View style={styles.gamebox}>
+             <View style={styles.oddsboxWrapper}><Image source={logos[team_zero_path]} style={styles.logostyle}/>
+             <Text style={styles.oddsbox}>
+              {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"":"+")}{best_odds_zero} @{best_site_zero})</Text></View>
+              <Text style={{fontFamily: 'Futura', marginLeft: 25, fontWeight: 'bold'}}>vs</Text>
+              <View style={[styles.oddsboxWrapper, {borderBottomWidth: 1, borderBottomColor: 'black'}]}><Image source={logos[team_one_path]} style={styles.logostyle}/>
+              <Text style={styles.oddsbox}>
               {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"":"+")}{best_odds_one} @{best_site_one})
               </Text></View>
               <Text style={styles.hometeambox}>
@@ -138,24 +141,29 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   gamebox: {
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor:'black',
     borderRadius:25,
     margin:8,
     paddingBottom: 3,
     backgroundColor: '#DFF4F9',
-
   },
   oddsboxWrapper: {
-    borderBottomColor: 'black',
-    borderBottomWidth:  0.5,
-    padding:10
+    padding:10,
+    flexDirection: 'row',
   },
   oddsbox: {
     fontFamily: 'Futura',
+    flexDirection: 'row',
+    marginLeft: 15,
+    alignSelf: 'center'
   },
   hometeambox: {
     padding:10,
     paddingVertical: 5
+  },
+  logostyle: {
+    width:50, 
+    height:50,
   }
 });
