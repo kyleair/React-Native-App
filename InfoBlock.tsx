@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, Image, View } from 'react-native'
+import logos from './imageloader'
 
 interface MyProps {
 
@@ -16,14 +17,23 @@ export default class InfoBlock extends Component<MyProps, MyState> {
 
 
 render(){
-    return(<Text style={styles.test}>testing component!!</Text>)
+    return(<View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+    <Text style={styles.test}>Where does this data come from? </Text><Image source={logos['downarrow']} style={styles.arrowicon}/>
+    </View>)
 }
 }
 
 const styles = StyleSheet.create({
     test: {
         fontFamily: 'Futura',
-        fontWeight: 'bold'
+        padding: 10,
+        paddingRight:0,
+        alignItems: 'center'
+    },
+    arrowicon: {
+        width:20,
+        height:20,
+        alignSelf: 'center'
     }
 })
 

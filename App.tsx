@@ -5,6 +5,7 @@ import goodd from './data2.json';
 import key from './apikey.json';
 import logos from './imageloader';
 import InfoBlock from './InfoBlock'
+import Socials from './Socials'
 
 interface MyProps {
 
@@ -74,19 +75,20 @@ render(){
       return <SafeAreaView><Text>Loading...</Text></SafeAreaView>;
     } else {
       return (
-        <SafeAreaView style = { [styles.container, darkMode?{backgroundColor: '#212121'}:{}]}>
+        <SafeAreaView style = { [styles.container, darkMode?darkStyle.darkContBack:{}]}>
           <ScrollView>
-            <View style={[styles.header, darkMode?{borderBottomColor: '#D9CAB3'}:{}]}>
-            <View style={ [styles.titlewrapper, darkMode?{backgroundColor: '#A2DBFA'}:{}]}>
+            <View style={[styles.header, darkMode?darkStyle.darkBord:{}]}>
+            <View style={ [styles.titlewrapper, darkMode?darkStyle.darkBoxBack:{}]}>
             <Text style={styles.title}>
              NFL Betting Odds
             </Text></View>
 
-            <TouchableOpacity onPress={()=>{this.toggleDarkMode()}}  style={ [styles.button, darkMode? {backgroundColor:'#A2DBFA'}:{}] }>
-              <Text style={ styles.buttontext }>{darkMode? 'Light Mode':'Dark Mode'} <Image source={darkMode?logos['sun']:logos['moon']} style={styles.buttonlogo}/></Text>
+            <TouchableOpacity onPress={()=>{this.toggleDarkMode()}}  style={ [styles.button, darkMode?darkStyle.darkBoxBack:{}] }>
+              <Image source={darkMode?logos['sun']:logos['moon']} style={styles.buttonlogo}/>
             </TouchableOpacity>
+
             </View>
-            <View style={styles.body}>
+            <View style={ styles.body }>
           {nfldata.map((game) => {
             let avg_odds_zero=0
             let best_odds_zero=game.sites[0].odds.h2h[0]
@@ -132,7 +134,7 @@ render(){
             if(avg_odds_one>=2) {avg_odds_one = Math.round((avg_odds_one-1)*100)}
             else {avg_odds_one = Math.round(-100/(avg_odds_one-1))}
 
-           return(<View style={ [styles.gamebox, darkMode?{backgroundColor: '#A2DBFA'}:{}]}>
+           return(<View style={ [styles.gamebox, darkMode?darkStyle.darkBoxBack:{}]}>
              <View style={styles.oddsboxWrapper}><Image source={logos[team_zero_path]} style={styles.logostyle}/>
              <Text style={styles.oddsbox}>
               {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"-":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"-":"+")}{best_odds_zero} at {best_site_zero})
@@ -147,12 +149,12 @@ render(){
               </Text>
               </View>) 
           })}
-          </View>
-          <View style={styles.footer}>
-          <View style={styles.gamebox}>
-            <Text style={styles.hometeambox}>Where did this data come from?</Text>
+          <View style={ [styles.gamebox, darkMode?darkStyle.darkBoxBack:{}, {marginTop: 20}] }>
             <InfoBlock></InfoBlock>
           </View>
+          </View>
+          <View style={styles.footer}>
+          <Socials></Socials>
           </View>
           </ScrollView>
         </SafeAreaView>
@@ -164,7 +166,7 @@ render(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#368B85',
+    backgroundColor: '#368B85'
   },
   titlewrapper: {
     backgroundColor: '#E8F0F2',
@@ -179,15 +181,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    borderBottomColor: 'black',
+    borderBottomColor: '#212121',
     borderBottomWidth: 3,
     padding:10
   },
   body: {
-    padding: 10
+    padding: 10,
+    borderBottomColor:'#212121',
+    borderBottomWidth: 3
   },
   footer: {
-
+    padding: 10,
+    backgroundColor: '#368B85',
   },
   gamebox: {
     borderWidth: 1,
@@ -219,19 +224,28 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#E8F0F2",
-    borderRadius: 25,
+    borderRadius: 15,
     padding: 7,
     margin: 10,
     borderWidth: 1,
     borderColor:'black',
     alignSelf: 'flex-start',
   },
-  buttontext: {
-    fontFamily: 'Futura',
-  },
   buttonlogo: {
     height: 15,
     width: 15,
-    paddingStart: 19,
+    padding: 11,
+  }
+});
+
+const darkStyle = StyleSheet.create({
+  darkContBack: {
+    backgroundColor: '#212121'
+  },
+  darkBoxBack: {
+    backgroundColor: '#A2DBFA'
+  },
+  darkBord: {
+    borderBottomColor: '#D9CAB3'
   }
 });

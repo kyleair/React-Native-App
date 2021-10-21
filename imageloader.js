@@ -32,7 +32,8 @@ const images = {
     tennesseetitans: require('./assets/logos/tennesseetitans.png'),
     washingtonfootballteam: require('./assets/logos/washingtonfootballteam.png'),
     moon: require('./assets/moon.png'),
-    sun: require('./assets/sun.png')
+    sun: require('./assets/sun.png'),
+    downarrow: require('./assets/downarrow.png')
 };
 
 export default images;
