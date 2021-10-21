@@ -33,35 +33,32 @@ export default class App extends Component<MyProps, MyState> {
 }
 
 componentDidMount() {
-  // fetch("https://odds.p.rapidapi.com/v1/odds?sport=americanfootball_nfl&region=us&mkt=h2h&dateFormat=iso&oddsFormat=american", {
-  //   "method": "GET",
-  //   "headers": {
-  //     "x-rapidapi-host": "odds.p.rapidapi.com",
-  //     "x-rapidapi-key": key.x_rapidapi_key
-  //   }
-  // })
-  //     .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //         this.setState({
-  //           isLoaded: true,
-  //           nfldata: result.data
-  //         });
-  //       },
-  //       // Note: it's important to handle errors here
-  //       // instead of a catch() block so that we don't swallow
-  //       // exceptions from actual bugs in components.
-  //       (error) => {
-  //         this.setState({
-  //           isLoaded: true,
-  //           error
-  //         });
-  //       }
-  //     )
- this.setState({
-   isLoaded: true,
-   nfldata: goodd.data
- })
+  fetch("https://odds.p.rapidapi.com/v1/odds?sport=americanfootball_nfl&region=us&mkt=h2h&dateFormat=iso&oddsFormat=american", {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "odds.p.rapidapi.com",
+      "x-rapidapi-key": key.x_rapidapi_key
+    }
+  })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            nfldata: result.data
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+//  this.setState({
+//    isLoaded: true,
+//    nfldata: goodd.data
+//  })
  }
 
 toggleDarkMode(){
