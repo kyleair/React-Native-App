@@ -20,7 +20,7 @@ export default class Socials extends Component<MyProps, MyState> {
 render(){
     return(
         <View>
-        <Text style={ styles.textstyle}>Socials</Text>
+        <Text style={ styles.textstyle}>Developer's Socials</Text>
         <View style={styles.container}>
     <SocialIcon type='github' onPress={()=> Linking.openURL('https://github.com/kyleair/React-Native-App')}/>
     <SocialIcon type='linkedin' onPress={()=> Linking.openURL('https://www.linkedin.com/in/kyle-air-813853164/')}/>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     textstyle: {
         fontFamily: 'Futura',
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: 10
     },
     container: {
         flexDirection: 'row',

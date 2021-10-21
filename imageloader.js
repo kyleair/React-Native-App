@@ -33,7 +33,8 @@ const images = {
     washingtonfootballteam: require('./assets/logos/washingtonfootballteam.png'),
     moon: require('./assets/moon.png'),
     sun: require('./assets/sun.png'),
-    downarrow: require('./assets/downarrow.png')
+    downarrow: require('./assets/downarrow.png'),
+    uparrow: require('./assets/uparrow.png'),
 };
 
 export default images;

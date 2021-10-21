@@ -6,6 +6,7 @@ import key from './apikey.json';
 import logos from './imageloader';
 import InfoBlock from './InfoBlock'
 import Socials from './Socials'
+import message from './infomessage'
 
 interface MyProps {
 
@@ -15,6 +16,7 @@ interface MyState {
   nfldata: any, 
   isLoaded: boolean, 
   darkMode: boolean
+  infoBoxOpen: boolean
   error: any
 }
 
@@ -25,6 +27,7 @@ export default class App extends Component<MyProps, MyState> {
       nfldata: [],
       isLoaded: false,
       darkMode: false,
+      infoBoxOpen: false,
       error:''
   }
 }
@@ -60,15 +63,22 @@ componentDidMount() {
    nfldata: goodd.data
  })
  }
+
 toggleDarkMode(){
   this.setState({
     darkMode: !this.state.darkMode
   })
 }
 
+toggleInfoBox(){
+  this.setState({
+    infoBoxOpen: !this.state.infoBoxOpen
+  })
+}
+
 render(){
   const { error, isLoaded, nfldata } = this.state;
-  var { darkMode } = this.state
+  var { darkMode, infoBoxOpen } = this.state
     if (error) {
       return <SafeAreaView><Text>Error: {error.message}</Text></SafeAreaView>;
     } else if (!isLoaded) {
@@ -125,6 +135,10 @@ render(){
                 avg_odds_one += 1-(100/site.odds.h2h[1])
               }
             })
+           if(best_site_zero==='William Hill (US)'){best_site_zero='William Hill'}
+           if(best_site_one==='William Hill (US)'){best_site_one='William Hill'}
+           if(best_site_zero==='Barstool Sportsbook'){best_site_zero='Barstool Sports'}
+           if(best_site_one==='BarstoolSportsbook'){best_site_one='Barstool Sports'}
 
             //normalize odds to average and convert to american format
             avg_odds_zero = avg_odds_zero/game.sites_count
@@ -137,23 +151,26 @@ render(){
            return(<View style={ [styles.gamebox, darkMode?darkStyle.darkBoxBack:{}]}>
              <View style={styles.oddsboxWrapper}><Image source={logos[team_zero_path]} style={styles.logostyle}/>
              <Text style={styles.oddsbox}>
-              {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"-":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"-":"+")}{best_odds_zero} at {best_site_zero})
+              {game.teams[0]}{'\n'}(Avg: {(avg_odds_zero<=0?"-":"+")}{avg_odds_zero} | Best: {(best_odds_zero<=0?"-":"+")}{best_odds_zero} @{best_site_zero})
               </Text></View>
               <Text style={{fontFamily: 'Futura', paddingLeft: 55, fontWeight: 'bold'}}>vs</Text>
               <View style={[styles.oddsboxWrapper, {borderBottomWidth: 1, borderBottomColor: 'black'}]}><Image source={logos[team_one_path]} style={styles.logostyle}/>
               <Text style={styles.oddsbox}>
-              {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"-":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"-":"+")}{best_odds_one} at {best_site_one})
+              {game.teams[1]}{'\n'}(Avg: {(avg_odds_one<=0?"-":"+")}{avg_odds_one} | Best: {(best_odds_one<=0?"-":"+")}{best_odds_one} @{best_site_one})
               </Text></View>
               <Text style={styles.hometeambox}>
-                Game at {game.home_team}{'\n'}{dateString}
+                Game @ {game.home_team}{'\n'}{dateString}
               </Text>
               </View>) 
           })}
+
           <View style={ [styles.gamebox, darkMode?darkStyle.darkBoxBack:{}, {marginTop: 20}] }>
-            <InfoBlock></InfoBlock>
+            <TouchableOpacity onPress={ ()=>{this.toggleInfoBox()} }><InfoBlock infoBoxOpen={infoBoxOpen}></InfoBlock></TouchableOpacity>
+            <View style={infoBoxOpen?styles.infoview:{}}><Text style={infoBoxOpen?styles.infotext:{}}>{infoBoxOpen?message:''}</Text></View>
           </View>
           </View>
-          <View style={styles.footer}>
+
+          <View style={ [styles.footer, darkMode?darkStyle.darkBoxBack:{}]}>
           <Socials></Socials>
           </View>
           </ScrollView>
@@ -204,13 +221,14 @@ const styles = StyleSheet.create({
   },
   oddsboxWrapper: {
     padding:10,
+    paddingLeft:4,
     flexDirection: 'row',
   },
   oddsbox: {
     fontFamily: 'Futura',
     flexDirection: 'row',
-    marginLeft: 15,
-    alignSelf: 'center'
+    marginLeft: 10,
+    alignSelf: 'center',
   },
   hometeambox: {
     padding:10,
@@ -235,6 +253,18 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     padding: 11,
+  },
+  infotext: {
+    fontFamily: 'Futura',
+    padding:15,
+    fontSize:16
+  },
+  infoview: {
+    marginTop:18,
+    paddingTop:8,
+    paddingBottom:5,
+    borderTopWidth:1,
+    borderTopColor:'black'
   }
 });
 
