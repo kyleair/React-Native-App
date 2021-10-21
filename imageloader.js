@@ -1,6 +1,6 @@
 const images = {
     arizonacardinals: require('./assets/logos/arizonacardinals.png'),
-    atlantafalcsons: require('./assets/logos/atlantafalcons.png'),
+    atlantafalcons: require('./assets/logos/atlantafalcons.png'),
     baltimoreravens: require('./assets/logos/baltimoreravens.png'),
     buffalobills: require('./assets/logos/buffalobills.png'),
     carolinapanthers: require('./assets/logos/carolinapanthers.png'),
@@ -30,7 +30,9 @@ const images = {
     seattleseahawks: require('./assets/logos/seattleseahawks.png'),
     tampabaybuccaneers: require('./assets/logos/tampabaybuccaneers.png'),
     tennesseetitans: require('./assets/logos/tennesseetitans.png'),
-    washingtonfootballteam: require('./assets/logos/washingtonfootballteam.png')
+    washingtonfootballteam: require('./assets/logos/washingtonfootballteam.png'),
+    moon: require('./assets/moon.png'),
+    sun: require('./assets/sun.png')
 };
 
 export default images;
