@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "BetApp",
-    "slug": "BetApp",
+    "name": "Best NFL Odds",
+    "slug": "Best NFL Odds",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/footballicon.png",
