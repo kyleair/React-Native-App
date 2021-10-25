@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Best NFL Odds",
-    "slug": "Best NFL Odds",
+    "name": "Best NFL Odds Finder",
+    "slug": "Best-NFL-Odds-Finder",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/footballicon.png",
