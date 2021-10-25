@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
 import goodd from './data2.json';
 import key from './apikey.json';
-import logos from './imageloader';
-import InfoBlock from './InfoBlock'
-import Socials from './Socials'
-import message from './infomessage'
+import logos from './components/imageloader';
+import InfoBlock from './components/InfoBlock'
+import Socials from './components/Socials'
+import message from './components/infomessage'
+import SafeViewAndroid from "./components/SafeViewAndroid"
 
 interface MyProps {
 
@@ -82,7 +83,7 @@ render(){
       return <SafeAreaView><Text>Loading...</Text></SafeAreaView>;
     } else {
       return (
-        <SafeAreaView style = { [styles.container, darkMode?darkStyle.darkContBack:{}]}>
+        <SafeAreaView style = { [styles.container, darkMode?darkStyle.darkContBack:{}, SafeViewAndroid.AndroidSafeArea]}>
           <ScrollView>
             <View style={[styles.header, darkMode?darkStyle.darkBord:{}]}>
             <View style={ [styles.titlewrapper, darkMode?darkStyle.darkBoxBack:{}]}>
